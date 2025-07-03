@@ -65,7 +65,7 @@ requestRouter.post("/request/review/:status/:requestId", userAuth, async(req,res
     const loggedInUser = req.user;
     //loggedInUser = toUserId
     //status = interested
-;
+
     const status = req.params.status;
     const requestId = req.params.requestId;
 

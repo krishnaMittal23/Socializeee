@@ -8,9 +8,14 @@ const bcrypt = require("bcrypt");
 const cookieParser = require("cookie-parser");
 const jwt = require("jsonwebtoken");
 const { userAuth } = require("./middlewares/auth");
+const cors = require("cors");
 
 app.use(express.json()); // to parse JSON data from the request body
 app.use(cookieParser()); // to parse cookies from the request
+app.use(cors({
+  origin: "http://localhost:5173", // replace with your frontend URL
+  credentials: true // to allow cookies to be sent with requests
+})); // to enable CORS for all routes
 
 //any other data apart from schema will be ignored by mongoose
 

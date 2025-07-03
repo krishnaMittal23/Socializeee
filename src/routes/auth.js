@@ -39,13 +39,22 @@ authRouter.post("/signup", async (req, res) => {
       password: passwordHash,
     });
 
-    await user.save();
-    res.send("User created successfully");
+    const savedUser = await user.save();
+
+    // we want user to be automatically login when he signs up so we need to setup cookies here also just like login
+
+    const token = await jwt.sign({ _id: savedUser._id }, "SecretKey", {
+      expiresIn: "7d",
+    });
+
+    //add the token to cookie and send the response to the user
+    res.cookie("token", token);
+
+    res.json({ message: "User created successfully", data: savedUser });
   } catch (err) {
     res.status(500).send("Error creating user " + err.message);
   }
 });
-
 
 //login api
 authRouter.post("/login", async (req, res) => {
@@ -62,12 +71,14 @@ authRouter.post("/login", async (req, res) => {
     if (isPasswordValid) {
       //install jsonwebtoken library
       //create a JWT token
-      const token = await jwt.sign({ _id: user._id }, "SecretKey", {expiresIn: '7d'});
+      const token = await jwt.sign({ _id: user._id }, "SecretKey", {
+        expiresIn: "7d",
+      });
 
       //add the token to cookie and send the response to the user
       res.cookie("token", token);
- 
-      res.send("Login successful");
+
+      res.send(user);
     } else {
       throw new Error("invalid credentials");
     }
@@ -77,13 +88,12 @@ authRouter.post("/login", async (req, res) => {
 });
 
 //logout
-authRouter.post("/logout", async (req,res)=>{
-  res.cookie("token", null , {
+authRouter.post("/logout", async (req, res) => {
+  res.cookie("token", null, {
     expires: new Date(Date.now()),
-  })
+  });
 
   res.send("Logout successful");
-
-})
+});
 
 module.exports = authRouter;

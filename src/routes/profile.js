@@ -2,6 +2,7 @@ const User = require("../models/user");
 const { userAuth } = require("../middlewares/auth");
 const { validateProfileEditData } = require("../utils/validation");
 const express = require('express');
+
 const profileRouter = express.Router();
 
 
@@ -36,7 +37,8 @@ profileRouter.patch("/profile/edit", userAuth, async(req,res)=>{
         await loggedInUser.save()
 
         res.json({
-            message: "Profile updated successfully",data: loggedInUser});
+            message: "Profile updated successfully",data: loggedInUser
+          });
 
     } catch (err) {
         return res.status(400).send("Invalid data " + err.message);

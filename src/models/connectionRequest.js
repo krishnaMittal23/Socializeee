@@ -20,7 +20,7 @@ const connectionRequestSchema = new mongoose.Schema({
     status: {
         type: String,
         enum: {
-            values: ["ignore", "accepted", "rejected","interested"],
+            values: ["ignore", "accepted", "ignored","interested"],
             message: `{VALUE} is not a valid status`
         },
         //use enum when we want user to select from a set of values

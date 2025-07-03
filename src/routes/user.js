@@ -54,7 +54,7 @@ userRouter.get("/user/connections", userAuth, async(req,res)=>{
             
         });
 
-        res.json({data: connectionRequests, message: "Connections fetched successfully"});
+        res.json({data: data, message: "Connections fetched successfully"});
     }
     catch(err){
         res.status(500).send("Error fetching connections: " + err.message);
@@ -99,7 +99,7 @@ userRouter.get("/feed", userAuth, async(req,res)=>{
              ],  //nin means not in , id not present in hideUserFromFeed array
         }).select(["firstName", "lastName","photoUrl", "age", "gender", "about","skills"]).skip(skip).limit(limit)  //to send only relevant data in the response
 
-        res.send(users);
+        res.json({data: users});
 
         //url to give:
         //http://localhost:3000/feed?page=1&limit=10

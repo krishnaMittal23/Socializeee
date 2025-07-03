@@ -4,6 +4,8 @@ const User = require('../models/user');
 const userAuth = async(req,res,next)=>{
     try {
         //read the token from the req cookies
+        //validate the token
+        //find the user
         const {token} = req.cookies;
         if(!token){
             return res.status(401).send("Unauthorized access, please login first");
@@ -21,8 +23,7 @@ const userAuth = async(req,res,next)=>{
 
         next();
         
-        //validate the token
-        //find the  user
+        
     } catch (err) {
         res.status(401).send("Unauthorized access, please login first " + err.message);
     }

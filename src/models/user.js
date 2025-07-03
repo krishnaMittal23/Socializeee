@@ -74,7 +74,7 @@ const userSchema = new mongoose.Schema({
 });
 
 
-//we can also write the JWT creation code here and basically offload it to the schema so that we need bot to write it in app.js
+//we can also write the JWT creation code here and basically offload it to the schema so that we need not to write it in app.js
 
 
 //dont use arrow functions here bcz this will not work with arrow functions as 'this' will not refer to the current document
